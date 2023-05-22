@@ -1,0 +1,7 @@
+@import "98.css";
+@import 'xterm/css/xterm.css';
+
+body {
+  background: no-repeat url("./assets/background.jpeg");
+  /* background: blue; */
+}
