@@ -25,9 +25,7 @@ let shellStream = null;
 io.on("connection", (socket) => {
   console.log("user connected. Id: " + socket.id);
   socket.on("exec-client2ser", (data) => {
-    // console.log('from client:', data);
     cmd = data.trim();
-    // console.log('cmd: ', cmd);
     shellStream.write(`${data}\n`);
   });
 
@@ -49,12 +47,9 @@ const sshCallback = (connection, err, stream, socket) => {
     throw err;
   }
 
-  // todo: [improvement needed]
   stream
     .on("data", (data) => {
-      // console.log(JSON.stringify(data));
       data = data.trim();
-      // console.log(cmd + '==' + data, cmd == data.toString());
       const skip = ["\r\n", "\u001b[?2004l\r", "\u001b[?2004h", cmd].includes(
         data,
       );
@@ -64,7 +59,6 @@ const sshCallback = (connection, err, stream, socket) => {
       }
     })
     .on("close", (code, signal) => {
-      // console.log('----Stream :: close :: code: ' + code + ', signal: ' + signal);
       connection.end();
     });
 };
@@ -75,8 +69,6 @@ app.post("/connect", (req, res) => {
   const user = req.body.user;
   const password = req.body.password;
 
-  // ip: 10.104.0.2
-  // password: boYH5F*oZH
   // Setting up connection to remote server.
   try {
     const sshConnection = new Client();
@@ -95,7 +87,6 @@ app.post("/connect", (req, res) => {
         port: 22,
         username: user,
         password: password,
-        // privateKey: readFileSync('/path/to/my/key')
       });
   } catch (err) {
     res.send(false);
