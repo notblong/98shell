@@ -1,10 +1,16 @@
-import { useState } from 'react'
-import './App.css'
-import Terminal, { TerminalConfigs } from './terminal/Terminal'
+import { useState } from "react";
+import "./App.css";
+import ConnectionDialog from "./connection-dialog/ConnectionDialog";
+import Terminal, { TerminalConfigs } from "./terminal/Terminal";
 
 function App() {
   const [fontSize, setFontSize] = useState(5);
+  const [requestConnect, setRequestConnect] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const configuration = {} as TerminalConfigs;
+  const onRequestConnect = (requested: boolean) => {
+    setRequestConnect(requested);
+  };
 
   return (
     <>
@@ -12,22 +18,29 @@ function App() {
         style={{
           display: "flex",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
-        <div style={{ width: '100%', minWidth: '545px', maxWidth: '880px'}} className="window">
+        {openDialog === true && requestConnect === false && (
+          <ConnectionDialog
+            onRequestConnect={onRequestConnect}
+            onClose={(e: boolean) => setOpenDialog(e)}
+          />
+        )}
+        <div
+          style={{ width: "100%", minWidth: "545px", maxWidth: "880px" }}
+          className="window"
+        >
           <div className="title-bar">
             <div className="title-bar-text">Terminal</div>
-            <div className="title-bar-controls">
-              <button aria-label="Minimize" />
-              <button aria-label="Maximize" />
-              <button aria-label="Close" />
-            </div>
+            <div className="title-bar-controls"></div>
           </div>
 
           <div className="window-body">
-            <div className="field-row" style={{width: "300px"}}>
-              <button>Toggle</button>
+            <div className="field-row" style={{ width: "300px" }}>
+              <button onClick={() => setOpenDialog(!openDialog)}>
+                Connect
+              </button>
             </div>
             <div className="field-row" style={{ width: "300px" }}>
               <label>Font size:</label>
@@ -39,16 +52,22 @@ function App() {
                 min="1"
                 max="11"
                 value={fontSize}
-                onChange={(e) => { console.log(e.target.value); setFontSize(parseInt(e.target.value)); configuration.font = { size: fontSize };  console.log(configuration)}} />
-              <label style={{fontSize: 15}}>Aa</label>
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setFontSize(parseInt(e.target.value));
+                  configuration.font = { size: fontSize };
+                  console.log(configuration);
+                }}
+              />
+              <label style={{ fontSize: 15 }}>Aa</label>
             </div>
             <hr />
-            <Terminal configuration={configuration} />
+            <Terminal onSubmit={requestConnect} />
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
