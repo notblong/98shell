@@ -87,6 +87,7 @@ app.post("/connect", (req, res) => {
         port: 22,
         username: user,
         password: password,
+        debug: console.log,
       });
   } catch (err) {
     res.send(false);
