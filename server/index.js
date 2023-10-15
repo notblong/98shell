@@ -88,6 +88,17 @@ app.post("/connect", (req, res) => {
         username: user,
         password: password,
         debug: console.log,
+        readyTimeout: 40000,
+        algorithms: {
+          kex: [
+            "diffie-hellman-group16-sha512",
+            "diffie-hellman-group14-sha256",
+            "diffie-hellman-group-exchange-sha256",
+          ],
+          // cipher: [ "aes128-ctr" ],
+          // serverHostKey: [ "ssh-rsa" ],
+          // compress: [ "none" ],
+        },
       });
   } catch (err) {
     res.send(false);
