@@ -64,6 +64,7 @@ const sshCallback = (connection, err, stream, socket) => {
 };
 
 app.post("/connect", (req, res) => {
+  req.setTimeout(40 * 1000); // timeout 40s
   console.log(req.body);
   const ipAddress = req.body.ipAddress;
   const user = req.body.user;
