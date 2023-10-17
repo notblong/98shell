@@ -2,15 +2,7 @@ import { FormEvent } from "react";
 import ConnectionIcon from "../assets/connection-icon.png";
 import axios from "../axios";
 
-function ConnectionDialog({
-  width = null,
-  height = null,
-  onRequestConnect,
-  onClose,
-}) {
-  const w = (width ?? screen.width) / 2;
-  const h = (height ?? screen.height) / 2;
-
+function ConnectionDialog({ onRequestConnect, onClose }) {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     const ipAddress = e.target["ipAddress"].value;
