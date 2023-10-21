@@ -7,7 +7,8 @@
 
     /* Bundler mode */
     "moduleResolution": "node",
-    // "allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -15,7 +16,7 @@
 
     /* Linting */
     "strict": false,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },

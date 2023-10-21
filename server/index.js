@@ -63,7 +63,7 @@ const sshCallback = (connection, err, stream, socket) => {
     });
 };
 
-app.post("/connect", (req, res) => {
+app.post("/connect", async (req, res) => {
   req.setTimeout(40 * 1000); // timeout 40s
   console.log(req.body);
   const ipAddress = req.body.ipAddress;
@@ -92,6 +92,7 @@ app.post("/connect", (req, res) => {
         username: user,
         password: password,
         debug: console.log,
+        tryKeyboard: true,
       });
   } catch (err) {
     res.send(false);
